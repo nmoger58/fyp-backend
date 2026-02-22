@@ -26,3 +26,4 @@ scikit-learn
 # Additional Dependencies
 pydantic
 requests
+matplotlib
