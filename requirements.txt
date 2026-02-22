@@ -27,4 +27,3 @@ scikit-learn
 pydantic
 requests
 matplotlib
-requests
