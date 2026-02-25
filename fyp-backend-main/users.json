@@ -1,0 +1,10 @@
+{
+  "admin": {
+    "password_hash": "pbkdf2_sha256$120000$TdCrfJ422cRxzxpotrntng==$hsK6FykwFdD5gsNLk2ZP8WNJOXgs9IbAzZ0Vg7+ZKZw=",
+    "role": "user"
+  },
+  "PS": {
+    "password_hash": "pbkdf2_sha256$120000$GP7Jae2uV7IEB1HfJIIOcA==$FJalPG2LiSUZohsoQk7dy2fy/ahVgpNlIhkzX+vCyUY=",
+    "role": "user"
+  }
+}
