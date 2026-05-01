@@ -6,5 +6,29 @@
   "PS": {
     "password_hash": "pbkdf2_sha256$120000$GP7Jae2uV7IEB1HfJIIOcA==$FJalPG2LiSUZohsoQk7dy2fy/ahVgpNlIhkzX+vCyUY=",
     "role": "user"
+  },
+  "testuser2": {
+    "password_hash": "pbkdf2_sha256$120000$j9sOBtOnr390HXMTz6TvJg==$SvVkrNBbMBbLmjIC4XFn8Ljs+OqCAPmGNdZjWMX+3Hc=",
+    "role": "user"
+  },
+  "Admin": {
+    "password_hash": "pbkdf2_sha256$120000$Y3OAj53TxUqpm8HP3dKTHg==$8VB1hDL/gpwwi1YpvQY+6Qulk5KjY0k2bJh9CjXYXiA=",
+    "role": "user"
+  },
+  "nmoger58@gmail.com": {
+    "password_hash": "pbkdf2_sha256$120000$uSEqIrvLGXt2UcNMme+KFw==$0aIjijmjs6q0Uw2OqVYom0brO05ENDzmLYtkgi+N/jo=",
+    "role": "user"
+  },
+  "nmoger58": {
+    "password_hash": "pbkdf2_sha256$120000$k9ZfqKx2K62oAWW45h7jLQ==$7yF264i6Zml3dRQkGptksZ8BHSjKBAmd5j33iiv3kzQ=",
+    "role": "user"
+  },
+  "test@gmail.com": {
+    "password_hash": "pbkdf2_sha256$120000$TWQrulwUCGgZxtofpDjQOg==$FSu1Z74nsUSr7jXrKedRX+fjKCgwozO9Ksu0sh0POQo=",
+    "role": "user"
+  },
+  "smruthiyrao@gmail.com": {
+    "password_hash": "pbkdf2_sha256$120000$91BaY0uHq9YFOX1YW6uXBw==$rbkYSj7ozUF+uG/vkj3KEp3yJf/++gE8LdT4ZJanU8g=",
+    "role": "user"
   }
 }

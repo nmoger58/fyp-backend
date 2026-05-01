@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, UploadFile, File, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import jwt, JWTError
 import torch
 import cv2
@@ -10,6 +10,8 @@ import numpy as np
 from torchvision import transforms
 import tempfile
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import json
 import base64
 import hashlib
@@ -40,7 +42,7 @@ app.add_middleware(
 # ========================================
 # JWT Authentication
 # ========================================
-security = HTTPBearer()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 JWT_SECRET = os.getenv("JWT_SECRET")
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
@@ -59,10 +61,6 @@ if not AUTH_USERNAME or not AUTH_PASSWORD:
     AUTH_PASSWORD = "admin123"
     print("??  AUTH_USERNAME/AUTH_PASSWORD not set - using development credentials.")
 
-
-class LoginRequest(BaseModel):
-    username: str
-    password: str
 
 
 class SignupRequest(BaseModel):
@@ -142,22 +140,22 @@ def create_access_token(subject: str, role: str) -> str:
 
 
 @app.post("/auth/login")
-async def login(payload: LoginRequest):
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     users = _load_users()
-    user = users.get(payload.username)
-    if not user or not _verify_password(payload.password, user.get("password_hash", "")):
+    user = users.get(form_data.username)
+    if not user or not _verify_password(form_data.password, user.get("password_hash", "")):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password",
         )
 
-    access_token = create_access_token(payload.username, user.get("role", AUTH_ROLE))
+    access_token = create_access_token(form_data.username, user.get("role", AUTH_ROLE))
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "expires_in_seconds": JWT_EXPIRE_MINUTES * 60,
         "role": user.get("role", AUTH_ROLE),
-        "username": payload.username,
+        "username": form_data.username,
     }
 
 
@@ -199,18 +197,11 @@ async def signup(payload: SignupRequest):
 
 
 def get_current_token(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    token: str = Depends(oauth2_scheme),
 ):
     """
     Validate JWT from the Authorization header.
     """
-    token = credentials.credentials if credentials else None
-    if not token:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Missing authentication token",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         username = payload.get("sub")
