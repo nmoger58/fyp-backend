@@ -30,3 +30,7 @@ matplotlib
 tqdm
 python-jose[cryptography]
 python-multipart
+python-dotenv
+
+# MongoDB async driver
+motor
